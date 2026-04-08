@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Flowers Quiz Responsive</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle at center, #fff0f5, #ffccd5);
+      overflow: hidden;
+      font-family: "Segoe Script", cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    h1 {
+      display: none;
+      font-size: 8vw; /* responsive */
+      color: #d63384;
+      text-shadow: 0 0 10px #ff99cc, 0 0 20px #ff4d6d;
+      margin: 0;
+      z-index: 10;
+      padding: 10px;
+    }
+
+    #quiz-box {
+      background: white;
+      padding: 5vw;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      max-width: 90%;
+    }
+
+    #quiz-box h2 {
+      margin-bottom: 4vw;
+      font-size: 6vw;
+      color: #d63384;
+    }
+
+    input {
+      width: 80%;
+      padding: 3vw;
+      font-size: 5vw;
+      border: 2px solid #ff77a9;
+      border-radius: 10px;
+      outline: none;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 4vw;
+      padding: 3vw 6vw;
+      font-size: 5vw;
+      border: none;
+      background: #ff4d6d;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #d63384;
+    }
+
+    .flower {
+      position: absolute;
+      width: 10vw;
+      height: 10vw;
+      pointer-events: none;
+      transform-origin: center;
+      animation: floatUp 3s linear forwards;
+    }
+
+    .petal {
+      position: absolute;
+      width: 4vw;
+      height: 6vw;
+      background: pink;
+      border-radius: 50px 50px 0 0;
+      transform-origin: bottom center;
+    }
+
+    @keyframes floatUp {
+      0% { transform: scale(0.6) rotate(0deg); opacity: 1; }
+      100% { transform: scale(1.2) rotate(360deg); opacity: 0; }
+    }
+
+    .deco {
+      display: none;
+      position: absolute;
+      width: 15vw;
+      height: 15vw;
+      top: 50%;
+      left: 50%;
+      transform-origin: center;
+      animation: spin 8s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg) translateX(40vw) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(40vw) rotate(-360deg); }
+    }
+
+    #feedback {
+      margin-top: 3vw;
+      font-size: 5vw;
+      color:#d63384;
+      font-weight:bold;
+    }
+
+    /* YouTube musik tetap disembunyikan */
+    #yt-video {
+      display: none;
+    }
+
+    /* Penyesuaian layar besar (tablet / laptop) */
+    @media (min-width: 768px) {
+      h1 { font-size: 3em; }
+      #quiz-box h2 { font-size: 2em; }
+      input, button { font-size: 1.2em; padding: 10px; }
+      #feedback { font-size: 1.2em; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Tebakan cinta -->
+  <div id="quiz-box">
+    <h2>Tebak-tebakan Cinta ❤️</h2>
+    <p>Buah apa yang selalu ingat kamu? 🤔</p>
+    <input type="text" id="answer" placeholder="Tulis jawabanmu di sini...">
+    <br>
+    <button onclick="checkAnswer()">Jawab</button>
+    <p id="feedback"></p>
+  </div>
+
+  <!-- Nama utama -->
+  <h1 id="main-name">💖 RIRI NURAZIZAH 💖</h1>
+
+  <!-- dekorasi bunga -->
+  <div class="deco" id="deco1"></div>
+  <div class="deco" id="deco2" style="animation-duration: 12s;"></div>
+
+ <!-- Musik -->
+  <audio id="bg-music" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+  </audio>
+  <script>
+    const colors = ["#ff4d6d", "#ff77a9", "#ff99cc", "#ff6f91", "#f08080", "#da70d6", "#ff1493"];
+
+    function createFlower(x, y, size = 50) {
+      const flower = document.createElement("div");
+      flower.classList.add("flower");
+      flower.style.left = x - size / 2 + "px";
+      flower.style.top = y - size / 2 + "px";
+
+      const numPetals = 6;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+
+      for (let i = 0; i < numPetals; i++) {
+        const petal = document.createElement("div");
+        petal.classList.add("petal");
+        petal.style.background = color;
+        petal.style.transform = `rotate(${i * (360 / numPetals)}deg)`;
+        flower.appendChild(petal);
+      }
+
+      document.body.appendChild(flower);
+      setTimeout(() => flower.remove(), 3000);
+    }
+
+    document.addEventListener("mousemove", (e) => {
+      if (document.getElementById("main-name").style.display === "block") {
+        createFlower(e.clientX, e.clientY, 40);
+      }
+    });
+
+    function addDeco(targetId, size = 70) {
+      const deco = document.getElementById(targetId);
+      const numPetals = 6;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+
+      for (let i = 0; i < numPetals; i++) {
+        const petal = document.createElement("div");
+        petal.classList.add("petal");
+        petal.style.background = color;
+        petal.style.transform = `rotate(${i * (360 / numPetals)}deg)`;
+        petal.style.width = "4vw";
+        petal.style.height = "6vw";
+        deco.appendChild(petal);
+      }
+    }
+
+    addDeco("deco1");
+    addDeco("deco2");
+
+    function checkAnswer() {
+      const ans = document.getElementById("answer").value.trim().toLowerCase();
+      const feedback = document.getElementById("feedback");
+
+      if (ans.includes("apel")) {
+        document.getElementById("quiz-box").style.display = "none";
+        document.getElementById("main-name").style.display = "block";
+        document.getElementById("deco1").style.display = "block";
+        document.getElementById("deco2").style.display = "block";
+
+          // mainkan musik
+        const music = document.getElementById("bg-music");
+        music.play();
+
+        feedback.innerText = "";
+      } else {
+        feedback.innerText = "😆 Salah! Coba lagi dong...";
+      }
+    }
+  </script>
+</body>
+</html>
+

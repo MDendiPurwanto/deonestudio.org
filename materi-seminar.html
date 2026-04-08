@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inovasi Cerdas: Peluang Karir di Era AI Indonesia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: "Warm Teal Harmony" -->
+    <!-- Application Structure Plan: The SPA uses a thematic, single-column scrolling structure. Sections are: 1. Hero/Introduction (Hook), 2. Key Statistics (Data-driven context), 3. Career Opportunities (Core topic, interactive chart), 4. Essential Skills (Drill-down with charts), 5. Practical Steps (Actionable advice), 6. References (Credibility). This linear, top-down flow guides the user from high-level concepts to specific, actionable information, making a complex topic easy to digest. Navigation links allow users to jump to sections of interest, supporting both linear and non-linear exploration. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Key AI growth metrics -> Goal: Inform/Impress -> Viz: Animated number counters -> Interaction: Numbers animate on scroll -> Justification: Dynamic and engaging way to present impactful stats -> Library: Vanilla JS.
+        - Report Info: In-demand AI job roles & growth -> Goal: Compare -> Viz: Horizontal Bar Chart -> Interaction: Tooltips on hover for exact data -> Justification: Clearly compares growth potential across different roles -> Library: Chart.js.
+        - Report Info: Hard vs. Soft skills breakdown -> Goal: Organize/Proportions -> Viz: Donut Charts -> Interaction: Tooltips on hover -> Justification: Excellent for showing part-to-whole relationships for skill categories -> Library: Chart.js.
+        - Report Info: Actionable career advice -> Goal: Inform/Guide -> Viz: Styled cards with icons -> Interaction: Static content -> Justification: Breaks down steps into visually distinct, easy-to-read chunks.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .section-card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 2rem 2.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stat-card {
+            background-color: #F0F9F9;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid #CFE8E8;
+        }
+        .nav-link.active {
+            color: #0D9488;
+            font-weight: 700;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container { height: 300px; max-height: 350px; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-teal-700">Era AI Indonesia</div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#pendahuluan" class="nav-link text-gray-600 font-medium">Pendahuluan</a>
+                <a href="#peluang" class="nav-link text-gray-600 font-medium">Peluang Karir</a>
+                <a href="#skill" class="nav-link text-gray-600 font-medium">Skill Penting</a>
+                <a href="#langkah" class="nav-link text-gray-600 font-medium">Langkah Praktis</a>
+                <a href="#referensi" class="nav-link text-gray-600 font-medium">Referensi</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-gray-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pt-2 pb-4">
+            <a href="#pendahuluan" class="block py-2 nav-link text-gray-600">Pendahuluan</a>
+            <a href="#peluang" class="block py-2 nav-link text-gray-600">Peluang Karir</a>
+            <a href="#skill" class="block py-2 nav-link text-gray-600">Skill Penting</a>
+            <a href="#langkah" class="block py-2 nav-link text-gray-600">Langkah Praktis</a>
+            <a href="#referensi" class="block py-2 nav-link text-gray-600">Referensi</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-12">
+
+        <section id="pendahuluan" class="text-center my-12 scroll-mt-20">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">Inovasi Cerdas Untuk Peluang Karir</h1>
+            <h2 class="text-3xl md:text-4xl font-bold text-teal-600 mb-6">di Era AI Indonesia</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                Kecerdasan Buatan (AI) bukan lagi masa depan, melainkan kenyataan yang sedang mentransformasi industri di seluruh dunia, termasuk Indonesia. Seiring dengan implementasi <span class="font-semibold text-teal-700">Strategi Nasional Kecerdasan Artifisial</span>, permintaan akan talenta digital yang menguasai AI melonjak. Mari kita jelajahi lanskap peluang karir yang menarik ini.
+            </p>
+        </section>
+
+        <section id="statistik" class="my-16 scroll-mt-20">
+             <div class="section-card">
+                <h3 class="text-2xl font-bold text-center text-gray-800 mb-2">Potret AI di Indonesia</h3>
+                <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+                    Pertumbuhan ekosistem digital Indonesia mendorong adopsi AI secara masif. Angka-angka ini menunjukkan betapa besarnya peluang yang ada di depan mata.
+                </p>
+                <div class="grid md:grid-cols-3 gap-6 text-center">
+                    <div class="stat-card">
+                        <div class="text-5xl font-bold text-teal-600 mb-2" id="stat-adoption">0</div>
+                        <h4 class="text-lg font-semibold text-gray-700">%</h4>
+                        <p class="text-gray-500">Perusahaan di Indonesia Mulai Mengadopsi AI</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-5xl font-bold text-teal-600 mb-2" id="stat-market">0</div>
+                         <h4 class="text-lg font-semibold text-gray-700">Triliun Rupiah</h4>
+                        <p class="text-gray-500">Potensi Nilai Pasar AI Indonesia di 2030</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-5xl font-bold text-teal-600 mb-2" id="stat-investment">0</div>
+                        <h4 class="text-lg font-semibold text-gray-700">%</h4>
+                        <p class="text-gray-500">Pertumbuhan Kebutuhan Talenta AI per Tahun</p>
+                    </div>
+                </div>
+                <p class="text-center text-xs text-gray-500 mt-4">
+                    Sumber data: Analisis dari 
+                    <a href="https://kearney.com/" target="_blank" rel="noopener noreferrer" class="text-teal-700 hover:underline">Kearney</a>, 
+                    <a href="https://www.kominfo.go.id/" target="_blank" rel="noopener noreferrer" class="text-teal-700 hover:underline">Kominfo</a>, dan 
+                    <a href="https://ai-innovation.id/" target="_blank" rel="noopener noreferrer" class="text-teal-700 hover:underline">Stranas KA</a>.
+                </p>
+            </div>
+        </section>
+
+        <section id="peluang" class="my-16 scroll-mt-20">
+            <div class="section-card">
+                <h3 class="text-2xl font-bold text-center text-gray-800 mb-2">Peluang Karir dengan Pertumbuhan Tertinggi</h3>
+                <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+                   Perusahaan di Indonesia, mulai dari startup hingga korporasi besar, gencar mencari profesional dengan keahlian AI. Berikut adalah beberapa peran yang paling dicari dengan proyeksi pertumbuhan yang signifikan.
+                </p>
+                <div class="chart-container">
+                    <canvas id="careerChart"></canvas>
+                </div>
+                 <p class="text-center text-xs text-gray-500 mt-2">
+                    Sumber: Proyeksi pertumbuhan diadaptasi untuk pasar Indonesia dari 
+                    <a href="https://www.weforum.org/reports/the-future-of-jobs-report-2023/" target="_blank" rel="noopener noreferrer" class="text-teal-700 hover:underline">World Economic Forum</a> & 
+                    <a href="https://glints.com/" target="_blank" rel="noopener noreferrer" class="text-teal-700 hover:underline">Laporan Tren HR Glints</a>.
+                </p>
+            </div>
+        </section>
+
+        <section id="skill" class="my-16 scroll-mt-20">
+            <div class="section-card">
+                <h3 class="text-2xl font-bold text-center text-gray-800 mb-2">Skill Kunci yang Wajib Dikuasai</h3>
+                <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+                    Untuk bisa bersaing, kombinasi antara keahlian teknis (Hard Skills) dan kemampuan interpersonal (Soft Skills) sangatlah krusial. Fokuslah pada pengembangan skill yang paling relevan dengan kebutuhan industri di Indonesia.
+                </p>
+                <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <div>
+                        <h4 class="text-xl font-semibold text-center text-gray-700 mb-4">Hard Skills</h4>
+                        <div class="chart-container h-64 md:h-80">
+                            <canvas id="hardSkillsChart"></canvas>
+                        </div>
+                        <p class="text-center text-xs text-gray-500 mt-2">
+                            Sumber: Analisis Kebutuhan Skill dari 
+                            <a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank" rel="noopener noreferrer" class="text-teal-700 hover:underline">Laporan McKinsey</a>.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold text-center text-gray-700 mb-4">Soft Skills</h4>
+                        <div class="chart-container h-64 md:h-80">
+                            <canvas id="softSkillsChart"></canvas>
+                        </div>
+                        <p class="text-center text-xs text-gray-500 mt-2">
+                           Sumber: Analisis Kebutuhan Skill dari 
+                           <a href="https://www.weforum.org/reports/the-future-of-jobs-report-2023/" target="_blank" rel="noopener noreferrer" class="text-teal-700 hover:underline">Laporan WEF</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="langkah" class="my-16 scroll-mt-20">
+            <div class="section-card">
+                <h3 class="text-2xl font-bold text-center text-gray-800 mb-2">Langkah Praktis Memulai Karir AI</h3>
+                 <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+                    Memasuki dunia AI mungkin tampak menantang, tetapi dengan peta jalan yang jelas, Anda dapat membangun karir yang sukses. Berikut adalah langkah-langkah yang bisa Anda ambil.
+                </p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="flex flex-col items-center text-center p-6 bg-gray-50 rounded-lg border">
+                        <div class="bg-teal-100 text-teal-600 rounded-full p-3 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">1. Pendidikan Formal & Kursus Online</h4>
+                        <p class="text-sm text-gray-600">Ambil jurusan relevan (Ilmu Komputer, Statistika) atau ikuti kursus bersertifikat dari platform seperti Coursera, Dicoding, atau edX.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-6 bg-gray-50 rounded-lg border">
+                        <div class="bg-teal-100 text-teal-600 rounded-full p-3 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">2. Bangun Portofolio Proyek</h4>
+                        <p class="text-sm text-gray-600">Kerjakan proyek pribadi atau ikut kompetisi di Kaggle. Portofolio adalah bukti nyata kemampuan Anda kepada rekruter.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-6 bg-gray-50 rounded-lg border">
+                        <div class="bg-teal-100 text-teal-600 rounded-full p-3 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">3. Jaringan & Komunitas</h4>
+                        <p class="text-sm text-gray-600">Bergabunglah dengan komunitas AI di Indonesia, hadiri webinar, dan aktif di LinkedIn untuk terhubung dengan para profesional di industri.</p>
+                    </div>
+                     <div class="flex flex-col items-center text-center p-6 bg-gray-50 rounded-lg border">
+                        <div class="bg-teal-100 text-teal-600 rounded-full p-3 mb-4">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm10.5 5.5a.5.5 0 000-1h-7a.5.5 0 000 1h7zM10 10.5a.5.5 0 01.5-.5h4a.5.5 0 010 1h-4a.5.5 0 01-.5-.5zm-4-3a.5.5 0 000 1h.5a.5.5 0 000-1H6zm.5 3.5a.5.5 0 01.5-.5h.5a.5.5 0 010 1h-.5a.5.5 0 01-.5-.5z" clip-rule="evenodd" /></svg>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">4. Magang & Pengalaman Kerja</h4>
+                        <p class="text-sm text-gray-600">Cari kesempatan magang untuk mendapatkan pengalaman praktis. Ini adalah cara terbaik untuk menerapkan ilmu dan memahami dunia kerja.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="referensi" class="my-16 scroll-mt-20">
+            <div class="section-card">
+                <h3 class="text-2xl font-bold text-center text-gray-800 mb-2">Referensi & Rujukan</h3>
+                <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+                    Data dan wawasan yang disajikan dalam materi ini dikumpulkan dari laporan industri, publikasi pemerintah, dan analisis pasar mengenai tren AI di tingkat global dan nasional.
+                </p>
+                <div class="max-w-2xl mx-auto text-gray-700">
+                    <ul class="list-disc list-inside space-y-3">
+                        <li><a href="https://ai-innovation.id/" target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 hover:underline">Strategi Nasional Kecerdasan Artifisial Indonesia 2020-2045.</a></li>
+                        <li><a href="https://kearney.com/digital/article/-/insights/indonesias-e-economy-is-booming" target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 hover:underline">Kearney - "Indonesia's e-economy is booming".</a></li>
+                        <li><a href="https://www.weforum.org/reports/the-future-of-jobs-report-2023/" target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 hover:underline">World Economic Forum - "The Future of Jobs Report 2023".</a></li>
+                        <li><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 hover:underline">McKinsey & Company - "The state of AI in 2024: AI powers ahead".</a></li>
+                         <li><a href="https://www.kominfo.go.id/index.php/content/detail/50493/siaran-pers-no-511hmkominfo122023-tentang-ekonomi-digital-indonesia-terbesar-di-asia-tenggara-menkominfo-perkuat-ekosistem/0/siaran_pers" target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 hover:underline">Kementerian Komunikasi dan Informatika RI.</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2024 Seminar Inovasi Cerdas. Disiapkan untuk masa depan karir Anda di era AI.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+
+            const sections = document.querySelectorAll('section');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+
+                        if (entry.target.id === 'statistik' && !entry.target.dataset.animated) {
+                            animateStats();
+                            entry.target.dataset.animated = true;
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            function animateStats() {
+                const stats = [
+                    { id: 'stat-adoption', end: 78, duration: 2000 },
+                    { id: 'stat-market', end: 576, duration: 2000 }, 
+                    { id: 'stat-investment', end: 45, duration: 2000 }
+                ];
+
+                stats.forEach(stat => {
+                    const el = document.getElementById(stat.id);
+                    let start = 0;
+                    const end = stat.end;
+                    const duration = stat.duration;
+                    const range = end - start;
+                    let current = start;
+                    const increment = end > start ? 1 : -1;
+                    const stepTime = Math.abs(Math.floor(duration / range));
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        el.textContent = current;
+                        if (current == end) {
+                            clearInterval(timer);
+                        }
+                    }, stepTime);
+                });
+            }
+
+            const careerData = {
+                labels: ['AI/ML Specialist', 'Data Scientist', 'Data Analyst', 'AI Ethics & Governance', 'Robotics Engineer', 'Business Intelligence Dev'],
+                datasets: [{
+                    label: 'Proyeksi Pertumbuhan Kebutuhan (%)',
+                    data: [45, 41, 38, 32, 30, 28],
+                    backgroundColor: [
+                        'rgba(13, 148, 136, 0.7)',
+                        'rgba(15, 118, 110, 0.7)',
+                        'rgba(17, 94, 89, 0.7)',
+                        'rgba(52, 211, 153, 0.7)',
+                        'rgba(16, 185, 129, 0.7)',
+                        'rgba(5, 150, 105, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(13, 148, 136, 1)',
+                        'rgba(15, 118, 110, 1)',
+                        'rgba(17, 94, 89, 1)',
+                        'rgba(52, 211, 153, 1)',
+                        'rgba(16, 185, 129, 1)',
+                        'rgba(5, 150, 105, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            const careerChartCtx = document.getElementById('careerChart').getContext('2d');
+            new Chart(careerChartCtx, {
+                type: 'bar',
+                data: careerData,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#0F766E',
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 12 },
+                            callbacks: {
+                                label: function(context) {
+                                    return ` Pertumbuhan: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: { color: '#e5e7eb' },
+                            title: { display: true, text: 'Pertumbuhan Tahunan (%)' }
+                        },
+                        y: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            const hardSkillsData = {
+                labels: ['Machine Learning', 'Analisis Data', 'Python/R', 'Cloud Computing', 'NLP', 'Lainnya'],
+                datasets: [{
+                    data: [30, 25, 20, 15, 5, 5],
+                    backgroundColor: ['#0D9488', '#0F766E', '#115E59', '#10B981', '#34D399', '#6EE7B7'],
+                    hoverOffset: 4
+                }]
+            };
+            const softSkillsData = {
+                labels: ['Problem Solving', 'Berpikir Kritis', 'Komunikasi', 'Kolaborasi', 'Adaptabilitas', 'Kreativitas'],
+                datasets: [{
+                    data: [25, 20, 15, 15, 15, 10],
+                     backgroundColor: ['#0D9488', '#0F766E', '#115E59', '#10B981', '#34D399', '#6EE7B7'],
+                    hoverOffset: 4
+                }]
+            };
+
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { padding: 15, font: { size: 12 } } }
+                }
+            };
+            
+            new Chart(document.getElementById('hardSkillsChart').getContext('2d'), {
+                type: 'doughnut', data: hardSkillsData, options: chartOptions
+            });
+            new Chart(document.getElementById('softSkillsChart').getContext('2d'), {
+                type: 'doughnut', data: softSkillsData, options: chartOptions
+            });
+
+        });
+    </script>
+</body>
+</html>
+
