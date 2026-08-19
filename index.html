@@ -764,25 +764,36 @@
                     closeShareModal();
                 }
             });
-        });
-        
-        // Handle initial hash in URL
-        if (window.location.hash) {
-            const initialElement = document.querySelector(window.location.hash);
-            if (initialElement) {
-                setTimeout(() => {
-                    const headerHeight = document.querySelector('header').offsetHeight;
-                    const elementPosition = initialElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
-                    
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                }, 100);
+
+            ['projectModal', 'shareModal'].forEach((id) => {
+                document.getElementById(id)?.addEventListener('click', (event) => {
+                    if (event.target.id === id) id === 'projectModal' ? closeProjectModal() : closeShareModal();
+                });
+            });
+
+            if (window.location.hash) {
+                const initialElement = document.querySelector(window.location.hash);
+                if (initialElement) {
+                    setTimeout(() => {
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        const elementPosition = initialElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }, 100);
+                }
             }
-        }
-    });
+
+            const loadingScreen = document.getElementById('loading-screen');
+            setTimeout(() => {
+                if (!loadingScreen) return;
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => loadingScreen.style.display = 'none', 500);
+            }, 450);
+        });
     
     // Add active state to navigation links
     window.addEventListener('scroll', () => {
@@ -807,26 +818,6 @@
             }
         });
     });
-    </script>
- <!-- WhatsApp Widget by Mintol.AI -->
-<!-- <script>
-  window.MintolWA = {
-    phone: "6285111024250",
-    greeting: "Halo ada yang bisa dibantu?",
-    message: "Halo, saya ingin bertanya",
-    buttonText: "Chat with Agent",
-    position: "right"
-  };
-</script>
-<script src="https://dash.mintol.ai/widget-wa.js" async></script> -->
-
-            const loadingScreen = document.getElementById('loading-screen');
-            setTimeout(() => {
-                if (!loadingScreen) return;
-                loadingScreen.style.opacity = '0';
-                setTimeout(() => loadingScreen.style.display = 'none', 500);
-            }, 450);
-        });
     </script>
 </body>
 </html>
