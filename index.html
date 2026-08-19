@@ -764,11 +764,61 @@
                     closeShareModal();
                 }
             });
-            ['projectModal', 'shareModal'].forEach((id) => {
-                document.getElementById(id)?.addEventListener('click', (event) => {
-                    if (event.target.id === id) id === 'projectModal' ? closeProjectModal() : closeShareModal();
-                });
-            });
+        });
+        
+        // Handle initial hash in URL
+        if (window.location.hash) {
+            const initialElement = document.querySelector(window.location.hash);
+            if (initialElement) {
+                setTimeout(() => {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const elementPosition = initialElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            }
+        }
+    });
+    
+    // Add active state to navigation links
+    window.addEventListener('scroll', () => {
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('a[href^="#"]');
+        
+        let currentSection = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            
+            if (window.pageYOffset >= sectionTop - 150) { // Adjust offset as needed
+                currentSection = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('text-blue-600', 'dark:text-blue-400');
+            if (link.getAttribute('href').substring(1) === currentSection) {
+                link.classList.add('text-blue-600', 'dark:text-blue-400');
+            }
+        });
+    });
+    </script>
+ <!-- WhatsApp Widget by Mintol.AI -->
+<!-- <script>
+  window.MintolWA = {
+    phone: "6285111024250",
+    greeting: "Halo ada yang bisa dibantu?",
+    message: "Halo, saya ingin bertanya",
+    buttonText: "Chat with Agent",
+    position: "right"
+  };
+</script>
+<script src="https://dash.mintol.ai/widget-wa.js" async></script> -->
 
             const loadingScreen = document.getElementById('loading-screen');
             setTimeout(() => {
