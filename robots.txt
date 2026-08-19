@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /assets/resume/
+Disallow: /.git/
+Disallow: /.well-known/
+
+Sitemap: https://dendipur.web.id/sitemap.xml
