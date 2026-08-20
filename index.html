@@ -722,8 +722,19 @@
                         Swal.fire({ icon: 'success', title: 'Message sent', text: 'Thank you for contacting me. I will get back to you soon.', confirmButtonColor: '#151719' });
                         form.reset();
                     })
-                    .catch(() => {
-                        Swal.fire({ icon: 'error', title: 'Message failed', text: 'Please try again later.', confirmButtonColor: '#151719' });
+                    .catch((error) => {
+                        const status = error?.status;
+                        const detail = error?.text || error?.message || 'Unknown EmailJS error';
+                        console.error('EmailJS failed:', { status, detail });
+                        const message = status === 412
+                            ? 'EmailJS blocked this request. Check the EmailJS domain allowlist and add this website origin.'
+                            : 'Please try again later.';
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Message failed',
+                            text: message,
+                            confirmButtonColor: '#151719'
+                        });
                     })
                     .finally(() => {
                         button.disabled = false;
